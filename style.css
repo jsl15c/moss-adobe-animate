@@ -1,14 +1,19 @@
 body {
-  background-image: url("moss.gif");
   height: 100%;
   width: 100%;
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  background-size: 100%;
-  background-repeat: no-repeat;
 }
 
-.overlay {
+#animation_container {
+  position: relative;
+  z-index: 3;
+}
 
+video {
+  width:100vw;
+  height:auto;
+  position:absolute;
+  z-index: 1;
+  margin: auto;
+  right:0;
+  left:0;
 }

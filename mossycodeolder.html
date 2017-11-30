@@ -12,27 +12,14 @@
 <link rel="stylesheet" name="text/css" href="style.css">
 </head>
 
-
-<p id="moss" allowtransparency="true" style="top: 160px; left: 40px; z-index: -2; display:none; position:absolute">
-<iframe src="moss1indiv.html" height="800" width="350" style="border:none; "></iframe>
-
-</p>
-
-<p id="moss2" allowtransparency="true" style="top:16px; left: 400px; z-index: -2; display:none; position:absolute ">
-<iframe src="moss1indiv.html" height="900" width="450" style="border:none; "></iframe>
-
-</p>
-
-<p id="moss3" allowtransparency="true" style="top:1px; left: 1200px; z-index: -2; display:none; position:absolute ">
-<iframe src="moss1indiv.html" height="900" width="450" style="border:none; "></iframe>
-
-</p>
-
 <body onload="init();" style="margin:0px; z-index: 3;">
-	<div id="animation_container" style="background-color:rgba(255, 255, 255, 0.00); width:1032px; height:508px; z-index: 3;">
-		<canvas id="canvas" width="1032" height="508" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00); z-index: 3;"></canvas>
-		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:1032px; height:508px; position: absolute; left: 0px; top: 0px; display: block; z-index: 3;">
+	<div id="animation_container" style="background-color:rgba(255, 255, 255, 0.00); width:100%; height:100%; z-index: 3;">
+		<canvas id="canvas" width="100%" height="100%" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 0.00); z-index: 3;"></canvas>
+		<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:100%; height:100%; position: absolute; left: 0px; top: 0px; display: block; z-index: 3;">
 		</div>
+    <video autoplay="true" loop="true">
+      <source src="moss.mp4" type="video/mp4">
+    </video>
 	</div>
 </body>
 
@@ -55,46 +42,46 @@ function handleComplete(evt,comp) {
 	exportRoot = new lib.mosscodeolder();
 	stage = new lib.Stage(canvas);
 	stage.addChild(exportRoot);
-	stage.enableMouseOver();	
+	stage.enableMouseOver();
 	//Registers the "tick" event listener.
 	fnStartAnimation = function() {
 		createjs.Ticker.setFPS(lib.properties.fps);
 		createjs.Ticker.addEventListener("tick", stage);
-	}	    
+	}
 	//Code to support hidpi screens and responsive scaling.
-	function makeResponsive(isResp, respDim, isScale, scaleType) {		
-		var lastW, lastH, lastS=1;		
-		window.addEventListener('resize', resizeCanvas);		
-		resizeCanvas();		
-		function resizeCanvas() {			
-			var w = lib.properties.width, h = lib.properties.height;			
-			var iw = window.innerWidth, ih=window.innerHeight;			
-			var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;			
-			if(isResp) {                
-				if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {                    
-					sRatio = lastS;                
-				}				
-				else if(!isScale) {					
-					if(iw<w || ih<h)						
-						sRatio = Math.min(xRatio, yRatio);				
-				}				
-				else if(scaleType==1) {					
-					sRatio = Math.min(xRatio, yRatio);				
-				}				
-				else if(scaleType==2) {					
-					sRatio = Math.max(xRatio, yRatio);				
-				}			
-			}			
-			canvas.width = w*pRatio*sRatio;			
+	function makeResponsive(isResp, respDim, isScale, scaleType) {
+		var lastW, lastH, lastS=1;
+		window.addEventListener('resize', resizeCanvas);
+		resizeCanvas();
+		function resizeCanvas() {
+			var w = lib.properties.width, h = lib.properties.height;
+			var iw = window.innerWidth, ih=window.innerHeight;
+			var pRatio = window.devicePixelRatio || 1, xRatio=iw/w, yRatio=ih/h, sRatio=1;
+			if(isResp) {
+				if((respDim=='width'&&lastW==iw) || (respDim=='height'&&lastH==ih)) {
+					sRatio = lastS;
+				}
+				else if(!isScale) {
+					if(iw<w || ih<h)
+						sRatio = Math.min(xRatio, yRatio);
+				}
+				else if(scaleType==1) {
+					sRatio = Math.min(xRatio, yRatio);
+				}
+				else if(scaleType==2) {
+					sRatio = Math.max(xRatio, yRatio);
+				}
+			}
+			canvas.width = w*pRatio*sRatio;
 			canvas.height = h*pRatio*sRatio;
-			canvas.style.width = dom_overlay_container.style.width = anim_container.style.width =  w*sRatio+'px';				
+			canvas.style.width = dom_overlay_container.style.width = anim_container.style.width =  w*sRatio+'px';
 			canvas.style.height = anim_container.style.height = dom_overlay_container.style.height = h*sRatio+'px';
-			stage.scaleX = pRatio*sRatio;			
-			stage.scaleY = pRatio*sRatio;			
-			lastW = iw; lastH = ih; lastS = sRatio;		
+			stage.scaleX = pRatio*sRatio;
+			stage.scaleY = pRatio*sRatio;
+			lastW = iw; lastH = ih; lastS = sRatio;
 		}
 	}
-	makeResponsive(true,'both',true,1);	
+	makeResponsive(true,'both',true,1);
 	AdobeAn.compositionLoaded(lib.properties.id);
 	fnStartAnimation();
 }
